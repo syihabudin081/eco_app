@@ -1,6 +1,7 @@
 package main
 
 import (
+	"belajar-go-fiber/config"
 	"belajar-go-fiber/controllers"
 	"belajar-go-fiber/database"
 	"belajar-go-fiber/database/migrations"
@@ -14,7 +15,7 @@ import (
 
 func main() {
 	app := fiber.New()
-
+	config.InitRedis()
 	// Initialize database
 	database.DatabaseInit()
 	// Inisialisasi Migration

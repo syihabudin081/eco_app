@@ -16,7 +16,8 @@ type ProductController struct {
 	Validator *validator.Validate
 }
 
-// NewProductController creates a new ProductController
+// NewProductController creates a new ProductControll
+// er
 func NewProductController(service services.ProductService) *ProductController {
 	return &ProductController{
 		Service:   service,
