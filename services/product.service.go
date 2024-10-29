@@ -35,7 +35,6 @@ func (p *productService) CreateProduct(product *models.Product) error {
 	if product == nil {
 		return errors.New("product cannot be nil")
 	}
-	// Perform business logic, validation, etc. before creating
 	return p.repo.CreateProduct(product)
 }
 

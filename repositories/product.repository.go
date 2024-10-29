@@ -27,7 +27,6 @@ func NewProductRepository(db *gorm.DB) ProductRepository {
 
 // CreateProduct creates a new product
 func (pr *productRepository) CreateProduct(product *models.Product) error {
-	// Use a transaction to ensure atomicity
 	return pr.DB.Transaction(func(tx *gorm.DB) error {
 		if err := tx.Create(product).Error; err != nil {
 			return err

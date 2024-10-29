@@ -27,8 +27,11 @@ func main() {
 	productRepo := repositories.NewProductRepository(database.DB)
 	productService := services.NewProductService(productRepo)
 	productController := controllers.NewProductController(productService)
-	// Initialize routes
-	routes.RouteInit(app, userController, productController)
+	articleRepo := repositories.NewArticleRepository(database.DB)
+	articleService := services.NewArticleService(articleRepo)
+	articleController := controllers.NewArticleController(articleService)
+	// Initialize 		routes
+	routes.RouteInit(app, userController, productController, articleController)
 
 	// Start the server
 	app.Listen(":3000")

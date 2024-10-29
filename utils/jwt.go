@@ -23,17 +23,25 @@ func GenerateToken(email, role string) (string, error) {
 
 // ValidateToken validates the JWT token and returns claims
 func ValidateToken(tokenString string) (jwt.MapClaims, error) {
+	// Parse token dengan callback untuk memverifikasi metode signing
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		// Verify that the signing method is HMAC
+		// Pastikan metode signing adalah HMAC
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
 		return jwtSecret, nil
 	})
 
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		return claims, nil
-	} else {
-		return nil, err
+	// Jika terjadi error atau token tidak valid, langsung return error
+	if err != nil || token == nil || !token.Valid {
+		return nil, fmt.Errorf("invalid token: %v", err)
 	}
+
+	// Konversi claims ke jwt.MapClaims
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return nil, fmt.Errorf("unable to parse claims")
+	}
+
+	return claims, nil
 }
